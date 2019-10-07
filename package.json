@@ -85,7 +85,7 @@
     "build-storybook": "build-storybook",
     "prettier": "prettier --write \"{src,scripts}/**/*.js\"",
     "prettier:check": "prettier --check \"{src,scripts}/**/*.js\"",
-    "prepare": "npm run build:dist",
+    "prepare": "npm run build:dist"
   },
   "pre-commit": {
     "run": "prettier"
