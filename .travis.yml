@@ -16,6 +16,6 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - yarn deploy-storybook
+      npm run deploy-storybook -- --ci
     on:
       branch: master

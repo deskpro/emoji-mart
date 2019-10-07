@@ -42,7 +42,7 @@ storiesOf('Picker', module)
       title={text('Idle text', 'Your Title Here')}
       icon={text('Idle icon', 'department_store')}
       notFoundIcon={text('Not found icon', 'sleuth_or_spy')}
-      color={color('Icon color', '#ae65c5')}
+      color={color('Icon color', '#495057')}
       showPreview={boolean('Show preview', true)}
       showSkinTones={boolean('Show skin tones', true)}
       custom={CUSTOM_ICONS}
