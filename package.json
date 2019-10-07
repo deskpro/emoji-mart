@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/deskpro/fa-picker",
   "dependencies": {
+    "@storybook/storybook-deployer": "^2.8.1",
     "babel-plugin-convert-to-json": "^0.1.0",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.0",
@@ -83,6 +84,7 @@
     "prepublishOnly": "npm run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "deploy-storybook": "storybook-to-ghpages",
     "prettier": "prettier --write \"{src,scripts}/**/*.js\"",
     "prettier:check": "prettier --check \"{src,scripts}/**/*.js\"",
     "prepare": "npm run build:dist"
