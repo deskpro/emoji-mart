@@ -37,7 +37,7 @@ const Icon = (props) => {
 
   const meta = props.data.icons[props.icon]
   if (!meta) {
-    return null;
+    return null
   }
   title = meta.label
   const iconStyle = meta.styles[0]

@@ -32,7 +32,7 @@ export default class ColorDot extends React.PureComponent {
   handleChangeComplete(color) {
     this.props.onChange(color.hex)
     if (this.timeout) {
-      window.clearTimeout(this.timeout);
+      window.clearTimeout(this.timeout)
     }
     var self = this
     this.timeout = window.setTimeout(function() {
@@ -48,7 +48,7 @@ export default class ColorDot extends React.PureComponent {
     if (!this.state.opened) {
       return null
     }
-    const { color, onChange } = this.props;
+    const { color, onChange } = this.props
     return (
       <ChromePicker
         onChange={this.handleChange}
@@ -56,7 +56,7 @@ export default class ColorDot extends React.PureComponent {
         color={color}
         alpha={false}
       />
-      )
+    )
   }
 
   render() {

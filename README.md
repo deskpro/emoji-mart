@@ -1,7 +1,7 @@
 <div align="center">
   <br><b>Fa Picker</b> is a Slack-like customizable<br>font awesome icon picker component for React
   <br><a href="https://deskpro.github.io/fa-picker">Demo</a> • <a href="https://github.com/deskpro/fa-picker/blob/master/CHANGELOG.md">Changelog</a>
-  <br><br><a href="https://travis-ci.org/deskpro/fa-picker"><img src="https://travis-ci.org/deskpro/fa-picker.svg?branch=master" alt="Build Status"></a>
+  <br><br><a href="https://travis-ci.com/deskpro/fa-picker"><img src="https://travis-ci.com/deskpro/fa-picker.svg?branch=master" alt="Build Status"></a>
   <br><br><img width="338" alt="picker" src="docs/images/FaIcon.png">
   <br>Brought to you by the <a title="Team email, team chat, team tasks, one app" href="https://deskpro.com">Deskpro</a> team
   
