@@ -7,16 +7,14 @@ import {
   text,
   boolean,
   number,
-  select,
   color,
 } from '@storybook/addon-knobs'
 
-import { Picker, Emoji, emojiIndex, NimbleEmojiIndex, getEmojiDataFromNative } from '../dist'
-import data from '../data/all.json'
-import '../css/emoji-mart.css'
+import { Picker, Icon, iconIndex, NimbleIconIndex } from '../dist'
+import '@fortawesome/fontawesome-free/css/all.css';
+import '../css/icon-mart.css'
 
-const SETS = ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']
-const CUSTOM_EMOJIS = [
+const CUSTOM_ICONS = [
   {
     name: 'Octocat',
     short_names: ['octocat'],
@@ -39,17 +37,15 @@ storiesOf('Picker', module)
       onSelect={action('selected')}
       onSkinChange={action('skin changed')}
       native={boolean('Unicode', true)}
-      set={select('Emoji pack', SETS, SETS[0])}
-      emojiSize={number('Emoji size', 24)}
+      iconSize={number('Icon size', 24)}
       perLine={number('Per line', 9)}
       title={text('Idle text', 'Your Title Here')}
-      emoji={text('Idle emoji', 'department_store')}
-      notFoundEmoji={text('Not found emoji', 'sleuth_or_spy')}
-      defaultSkin={number('Default skin tone', 1)}
-      color={color('Highlight color', '#ae65c5')}
+      icon={text('Idle icon', 'department_store')}
+      notFoundIcon={text('Not found icon', 'sleuth_or_spy')}
+      color={color('Icon color', '#ae65c5')}
       showPreview={boolean('Show preview', true)}
       showSkinTones={boolean('Show skin tones', true)}
-      custom={CUSTOM_EMOJIS}
+      custom={CUSTOM_ICONS}
     />
   ))
 
@@ -63,7 +59,7 @@ storiesOf('Picker', module)
 
   .add('Custom category icons', () => (
     <Picker
-      custom={CUSTOM_EMOJIS}
+      custom={CUSTOM_ICONS}
       icons={{
         categories: {
           recent: () => (
@@ -169,26 +165,25 @@ storiesOf('Picker', module)
     />
   ))
 
-  .add('Custom skin emoji', () => (
+  .add('Custom skin icon', () => (
     <Picker
       native={boolean('Unicode', true)}
-      emojiSize={24}
-      skinEmoji={text('Skin Preview Icon', 'v')}
+      iconSize={24}
+      skinIcon={text('Skin Preview Icon', 'v')}
     />
   ))
 
-storiesOf('Emoji', module)
+storiesOf('Icon', module)
   .addDecorator(withKnobs)
   .add('Default', () => (
-    <Emoji
+    <Icon
       native={boolean('Unicode', true)}
-      set={select('Emoji pack', SETS, SETS[0])}
-      emoji={text('Emoji', '+1')}
-      size={number('Emoji size', 64)}
+      icon={text('Icon', '+1')}
+      size={number('Icon size', 64)}
       skin={number('Skin tone', 1)}
       html={boolean('HTML', false)}
-      fallback={(emoji, props) => {
-        return emoji ? `:${emoji.short_names[0]}:` : props.emoji
+      fallback={(icon, props) => {
+        return icon ? `:${icon.short_names[0]}:` : props.icon
       }}
     />
   ))
@@ -196,8 +191,8 @@ storiesOf('Emoji', module)
 storiesOf('Headless Search', module)
   .addDecorator(withKnobs)
   .add('Default', () => {
-    let results = emojiIndex.search(text('Search', 'christmas'), {
-      custom: CUSTOM_EMOJIS,
+    let results = iconIndex.search(text('Search', 'christmas'), {
+      custom: CUSTOM_ICONS,
     })
     if (!results) {
       return null
@@ -205,10 +200,10 @@ storiesOf('Headless Search', module)
 
     return (
       <div>
-        {results.map((emoji) => {
+        {results.map((icon) => {
           return (
-            <span key={emoji.id} style={{ marginLeft: '1.4em' }}>
-              <Emoji native={true} emoji={emoji} size={48} />
+            <span key={icon.id} style={{ marginLeft: '1.4em' }}>
+              <Icon native={true} icon={icon} size={48} />
             </span>
           )
         })}
@@ -217,9 +212,9 @@ storiesOf('Headless Search', module)
   })
 
   .add('With skin tone from store', () => {
-    const nimbleEmojiIndex = new NimbleEmojiIndex(data)
-    let results = nimbleEmojiIndex.search(text('Search', 'thumbs'), {
-      custom: CUSTOM_EMOJIS,
+    const nimbleIconIndex = new NimbleIconIndex(data)
+    let results = nimbleIconIndex.search(text('Search', 'thumbs'), {
+      custom: CUSTOM_ICONS,
     })
     if (!results) {
       return null
@@ -227,13 +222,13 @@ storiesOf('Headless Search', module)
 
     return (
       <div>
-        {results.map((emoji) => {
+        {results.map((icon) => {
           return (
-            <span key={emoji.id} style={{ marginLeft: '1.4em' }}>
-              <Emoji
+            <span key={icon.id} style={{ marginLeft: '1.4em' }}>
+              <Icon
                 native={true}
-                emoji={emoji}
-                skin={emoji.skin || 1}
+                icon={icon}
+                skin={icon.skin || 1}
                 size={48}
               />
             </span>
@@ -243,34 +238,3 @@ storiesOf('Headless Search', module)
     )
   })
 
-storiesOf('Get emoji data from Native', module)
-  .addDecorator(withKnobs)
-  .add('Default', () => {
-    const emojiData = getEmojiDataFromNative(
-      text('Unicode', '🏋🏿‍♂️'),
-      select('Emoji pack', SETS, SETS[0]),
-      data
-    )
-    if (!emojiData) {
-      return (
-        <div>
-          Couldn`t find any emoji data from native...
-        </div>
-      )
-    }
-
-    return (
-      <div>
-        <Emoji
-          emoji={emojiData}
-          set={select('Emoji pack', SETS, SETS[0])}
-          skin={emojiData.skin || 1}
-          size={48}
-        />
-
-        <pre>
-          emojiData: {JSON.stringify(emojiData, null, 2)}
-        </pre>
-      </div>
-    )
-  })

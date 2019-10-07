@@ -1,6 +1,4 @@
-import { buildSearch } from './data'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
-import { uncompress } from './data'
 
 const _JSON = JSON
 
@@ -60,6 +58,8 @@ function getSanitizedData() {
   return sanitize(getData(...arguments))
 }
 
+function getIcon() {}
+
 function getData(emoji, skin, set, data) {
   var emojiData = {}
 
@@ -74,22 +74,14 @@ function getData(emoji, skin, set, data) {
       }
     }
 
-    if (data.aliases.hasOwnProperty(emoji)) {
-      emoji = data.aliases[emoji]
-    }
-
-    if (data.emojis.hasOwnProperty(emoji)) {
-      emojiData = data.emojis[emoji]
+    if (data.icons.hasOwnProperty(emoji)) {
+      emojiData = data.icons[emoji]
     } else {
       return null
     }
   } else if (emoji.id) {
-    if (data.aliases.hasOwnProperty(emoji.id)) {
-      emoji.id = data.aliases[emoji.id]
-    }
-
-    if (data.emojis.hasOwnProperty(emoji.id)) {
-      emojiData = data.emojis[emoji.id]
+    if (data.icons.hasOwnProperty(emoji.id)) {
+      emojiData = data.icons[emoji.id]
       skin || (skin = emoji.skin)
     }
   }
@@ -97,14 +89,7 @@ function getData(emoji, skin, set, data) {
   if (!Object.keys(emojiData).length) {
     emojiData = emoji
     emojiData.custom = true
-
-    if (!emojiData.search) {
-      emojiData.search = buildSearch(emoji)
-    }
   }
-
-  emojiData.emoticons || (emojiData.emoticons = [])
-  emojiData.variations || (emojiData.variations = [])
 
   if (emojiData.skin_variations && skin > 1) {
     emojiData = JSON.parse(_JSON.stringify(emojiData))
@@ -140,10 +125,6 @@ function getData(emoji, skin, set, data) {
 }
 
 function getEmojiDataFromNative(nativeString, set, data) {
-  if (data.compressed) {
-    uncompress(data)
-  }
-
   const skinTones = ['🏻', '🏼', '🏽', '🏾', '🏿']
   const skinCodes = ['1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 

@@ -27,6 +27,7 @@ export default class Anchors extends React.PureComponent {
     var { categories, color, i18n, icons } = this.props,
       { selected } = this.state
 
+    return null
     return (
       <nav className="emoji-mart-anchors" aria-label={i18n.categorieslabel}>
         {categories.map((category, i) => {
@@ -50,9 +51,9 @@ export default class Anchors extends React.PureComponent {
               }`}
               style={{ color: isSelected ? color : null }}
             >
-              <div className="emoji-mart-anchor-icon">
-                {icons.categories[id]()}
-              </div>
+              {/*<div className="emoji-mart-anchor-icon">*/}
+              {/*  {icons.categories[id]()}*/}
+              {/*</div>*/}
               <span
                 className="emoji-mart-anchor-bar"
                 style={{ backgroundColor: color }}

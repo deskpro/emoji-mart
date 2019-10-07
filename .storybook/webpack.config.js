@@ -26,7 +26,16 @@ module.exports = (baseConfig, env) => {
       use: [ 'style-loader', 'css-loader' ],
       include: [
         path.resolve(__dirname, '../css'),
+        path.resolve(__dirname, '../node_modules/@fortawesome/fontawesome-free'),
       ],
+    },
+    {
+      test: /\.(woff|woff2|ttf|eot|svg)(\?|$)/,
+      use:  [
+        {
+          loader: 'url-loader'
+        }
+      ]
     },
   ];
 

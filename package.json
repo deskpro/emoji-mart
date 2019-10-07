@@ -1,31 +1,34 @@
 {
-  "name": "emoji-mart",
-  "version": "2.11.1",
-  "description": "Customizable Slack-like emoji picker for React",
+  "name": "@deskpro/fa-picker",
+  "version": "0.0.1",
+  "description": "Customizable Slack-like font awesome icon picker for React based on emoji-mart",
   "main": "dist/index.js",
   "module": "dist-es/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:missive/emoji-mart.git"
+    "url": "git@github.com:deskpro/fa-picker.git"
   },
   "keywords": [
     "react",
     "emoji",
     "picker"
   ],
-  "author": "Etienne Lemay",
+  "author": "DeskPRO <support@deskpro.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/missive/emoji-mart/issues"
+    "url": "https://github.com/deskpro/fa-picker/issues"
   },
-  "homepage": "https://github.com/missive/emoji-mart",
+  "homepage": "https://github.com/deskpro/fa-picker",
   "dependencies": {
-    "prop-types": "^15.6.0"
+    "babel-plugin-convert-to-json": "^0.1.0",
+    "prop-types": "^15.6.0",
+    "react-color": "^2.17.3"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "@storybook/addon-actions": "^3.2.11",
     "@storybook/addon-knobs": "^3.2.10",
     "@storybook/addon-links": "^3.2.10",
@@ -58,17 +61,17 @@
     "react-test-renderer": "^16.8.4",
     "rimraf": "2.5.2",
     "size-limit": "^0.11.4",
+    "url-loader": "^2.1.0",
     "webpack": "^3.6.0"
   },
   "scripts": {
     "changelog": "auto-changelog",
     "clean": "rm -rf dist/ dist-es/ dist-modern/",
-    "build:data": "node scripts/build-data",
     "build:dist": "npm run build:cjs && npm run build:es && npm run build:modern",
     "build:cjs": "BABEL_ENV=legacy-cjs babel src --out-dir dist --copy-files --ignore '**/*.test.js'",
     "build:es": "BABEL_ENV=legacy-es babel src --out-dir dist-es --copy-files --ignore '**/*.test.js'",
     "build:modern": "babel src --out-dir dist-modern --copy-files --ignore '**/*.test.js'",
-    "build:docs": "cp css/emoji-mart.css docs && webpack --config ./docs/webpack.config.js",
+    "build:docs": "cp css/icon-mart.css docs && webpack --config ./docs/webpack.config.js",
     "build": "npm run clean && npm run build:dist",
     "watch": "BABEL_ENV=cjs babel src --watch --out-dir dist --copy-files --ignore '**/*.test.js'",
     "start": "npm run watch",

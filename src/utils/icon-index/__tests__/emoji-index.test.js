@@ -1,4 +1,4 @@
-import emojiIndex from '../emoji-index.js'
+import emojiIndex from '../icon-index.js'
 
 test('should work', () => {
   expect(emojiIndex.search('pineapple')).toEqual([

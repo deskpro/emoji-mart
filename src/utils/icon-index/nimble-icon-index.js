@@ -1,56 +1,26 @@
 import { getData, getSanitizedData, intersect } from '..'
-import { uncompress } from '../data'
-import store from '../store'
 
-export default class NimbleEmojiIndex {
+export default class NimbleIconIndex {
   constructor(data, set) {
-    if (data.compressed) {
-      uncompress(data)
-    }
-
     this.data = data || {}
     this.set = set || null
     this.originalPool = {}
     this.index = {}
-    this.emojis = {}
-    this.emoticons = {}
+    this.icons = {}
     this.customEmojisList = []
 
     this.buildIndex()
   }
 
   buildIndex() {
-    for (let emoji in this.data.emojis) {
-      let emojiData = this.data.emojis[emoji],
-        { short_names, emoticons, skin_variations } = emojiData,
-        id = short_names[0]
+    for (let icon in this.data.icons) {
+      let iconData = this.data.icons[icon],
+        { short_names, search, label } = iconData,
+        id = icon
 
-      if (emoticons) {
-        emoticons.forEach((emoticon) => {
-          if (this.emoticons[emoticon]) {
-            return
-          }
+      this.icons[id] = id
 
-          this.emoticons[emoticon] = id
-        })
-      }
-
-      // If skin variations include them
-      if (skin_variations) {
-        this.emojis[id] = {}
-        for (let skinTone = 1; skinTone <= 6; skinTone++) {
-          this.emojis[id][skinTone] = getSanitizedData(
-            { id, skin: skinTone },
-            skinTone,
-            this.set,
-            this.data,
-          )
-        }
-      } else {
-        this.emojis[id] = getSanitizedData(id, null, this.set, this.data)
-      }
-
-      this.originalPool[id] = emojiData
+      this.originalPool[id] = iconData
     }
   }
 
@@ -59,7 +29,7 @@ export default class NimbleEmojiIndex {
       let emojiId = emoji.id || emoji.short_names[0]
 
       delete pool[emojiId]
-      delete this.emojis[emojiId]
+      delete this.icons[emojiId]
     })
   }
 
@@ -71,7 +41,7 @@ export default class NimbleEmojiIndex {
 
       if (emojiId && !pool[emojiId]) {
         pool[emojiId] = getData(emoji, null, null, this.data)
-        this.emojis[emojiId] = getSanitizedData(emoji, null, null, this.data)
+        this.icons[emojiId] = getSanitizedData(emoji, null, null, this.data)
       }
     })
 
@@ -83,11 +53,6 @@ export default class NimbleEmojiIndex {
     value,
     { emojisToShowFilter, maxResults, include, exclude, custom = [] } = {},
   ) {
-    if (this.customEmojisList != custom)
-      this.addCustomToPool(custom, this.originalPool)
-
-    const skinTone = store.get('skin') || 1
-
     maxResults || (maxResults = 75)
     include || (include = [])
     exclude || (exclude = [])
@@ -96,10 +61,6 @@ export default class NimbleEmojiIndex {
       pool = this.originalPool
 
     if (value.length) {
-      if (value == '-' || value == '-1') {
-        return [this.emojis['-1'][skinTone]]
-      }
-
       var values = value.toLowerCase().split(/[\s|,|\-|_]+/),
         allResults = []
 
@@ -121,8 +82,8 @@ export default class NimbleEmojiIndex {
             return
           }
 
-          category.emojis.forEach(
-            (emojiId) => (pool[emojiId] = this.data.emojis[emojiId]),
+          category.icons.forEach(
+            (iconId) => (pool[iconId] = this.data.icons[iconId]),
           )
         })
 
@@ -160,17 +121,19 @@ export default class NimbleEmojiIndex {
                 let emoji = aPool[id],
                   { search } = emoji,
                   sub = value.substr(0, length),
-                  subIndex = search.indexOf(sub)
+                  subIndex = -1
+                let term = search.terms.find((term) => term.indexOf(sub) != -1)
+                if (term) {
+                  subIndex = term.indexOf(sub)
+                } else {
+                  subIndex = id.indexOf(sub)
+                }
 
                 if (subIndex != -1) {
                   let score = subIndex + 1
                   if (sub == id) score = 0
 
-                  if (this.emojis[id] && this.emojis[id][skinTone]) {
-                    aIndex.results.push(this.emojis[id][skinTone])
-                  } else {
-                    aIndex.results.push(this.emojis[id])
-                  }
+                  aIndex.results.push(this.icons[id])
                   aIndex.pool[id] = emoji
 
                   scores[id] = score
@@ -182,7 +145,7 @@ export default class NimbleEmojiIndex {
                   bScore = scores[b.id]
 
                 if (aScore == bScore) {
-                  return a.id.localeCompare(b.id)
+                  return a.localeCompare(b)
                 } else {
                   return aScore - bScore
                 }

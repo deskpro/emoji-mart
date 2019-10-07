@@ -1,9 +1,9 @@
-import NimbleEmojiIndex from '../nimble-emoji-index.js'
+import NimbleIconIndex from '../nimble-icon-index.js'
 import store from '../../store'
 
 import data from '../../../../data/all'
 
-const nimbleEmojiIndex = new NimbleEmojiIndex(data)
+const nimbleEmojiIndex = new NimbleIconIndex(data)
 
 function getEmojiData(skinTone) {
   store.update({ skin: skinTone })

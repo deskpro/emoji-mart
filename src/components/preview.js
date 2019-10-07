@@ -2,33 +2,32 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { getData } from '../utils'
-import NimbleEmoji from './emoji/nimble-emoji'
-import SkinsEmoji from './skins-emoji'
-import SkinsDot from './skins-dot'
+import Icon from './icon/icon'
+import ColorDot from './color-dot'
 
 export default class Preview extends React.PureComponent {
   constructor(props) {
     super(props)
 
     this.data = props.data
-    this.state = { emoji: null }
+    this.state = { icon: null }
   }
 
   render() {
-    var { emoji } = this.state,
+    var { icon } = this.state,
       {
         emojiProps,
-        skinsProps,
-        showSkinTones,
+        colorsProps,
+        showColorPicker,
         title,
-        emoji: idleEmoji,
+        icon: idleEmoji,
         i18n,
         showPreview,
       } = this.props
 
-    if (emoji && showPreview) {
-      var emojiData = getData(emoji, null, null, this.data),
-        { emoticons = [] } = emojiData,
+    if (icon && showPreview) {
+      var iconData = getData(icon, null, null, this.data),
+        { emoticons = [] } = iconData,
         knownEmoticons = [],
         listedEmoticons = []
 
@@ -44,31 +43,30 @@ export default class Preview extends React.PureComponent {
       return (
         <div className="emoji-mart-preview">
           <div className="emoji-mart-preview-emoji" aria-hidden="true">
-            {NimbleEmoji({
-              key: emoji.id,
-              emoji: emoji,
+            {Icon({
+              key: icon.id,
+              icon,
               data: this.data,
               ...emojiProps,
             })}
           </div>
 
           <div className="emoji-mart-preview-data" aria-hidden="true">
-            <div className="emoji-mart-preview-name">{emoji.name}</div>
-            <div className="emoji-mart-preview-shortnames">
-              {emojiData.short_names.map((short_name) => (
-                <span key={short_name} className="emoji-mart-preview-shortname">
-                  :{short_name}:
-                </span>
-              ))}
-            </div>
-            <div className="emoji-mart-preview-emoticons">
-              {listedEmoticons.map((emoticon) => (
-                <span key={emoticon} className="emoji-mart-preview-emoticon">
-                  {emoticon}
-                </span>
-              ))}
-            </div>
+            <div className="emoji-mart-preview-name">{iconData.label}</div>
           </div>
+          {showColorPicker && (
+            <div
+              className={`emoji-mart-preview-color${
+                colorsProps.skinEmoji ? ' custom' : ''
+              }`}
+            >
+              <ColorDot
+                color={colorsProps.color}
+                i18n={i18n}
+                onChange={colorsProps.onChange}
+              />
+            </div>
+          )}
         </div>
       )
     } else {
@@ -77,35 +75,24 @@ export default class Preview extends React.PureComponent {
           <div className="emoji-mart-preview-emoji" aria-hidden="true">
             {idleEmoji &&
               idleEmoji.length &&
-              NimbleEmoji({ emoji: idleEmoji, data: this.data, ...emojiProps })}
+              Icon({ icon: idleEmoji, data: this.data, ...emojiProps })}
           </div>
 
           <div className="emoji-mart-preview-data" aria-hidden="true">
             <span className="emoji-mart-title-label">{title}</span>
           </div>
 
-          {showSkinTones && (
+          {showColorPicker && (
             <div
-              className={`emoji-mart-preview-skins${
-                skinsProps.skinEmoji ? ' custom' : ''
+              className={`emoji-mart-preview-color${
+                colorsProps.skinEmoji ? ' custom' : ''
               }`}
             >
-              {skinsProps.skinEmoji ? (
-                <SkinsEmoji
-                  skin={skinsProps.skin}
-                  emojiProps={emojiProps}
-                  data={this.data}
-                  skinEmoji={skinsProps.skinEmoji}
-                  i18n={i18n}
-                  onChange={skinsProps.onChange}
-                />
-              ) : (
-                <SkinsDot
-                  skin={skinsProps.skin}
-                  i18n={i18n}
-                  onChange={skinsProps.onChange}
-                />
-              )}
+              <ColorDot
+                color={colorsProps.color}
+                i18n={i18n}
+                onChange={colorsProps.onChange}
+              />
             </div>
           )}
         </div>
@@ -115,14 +102,14 @@ export default class Preview extends React.PureComponent {
 }
 
 Preview.propTypes /* remove-proptypes */ = {
-  showSkinTones: PropTypes.bool,
+  showColorPicker: PropTypes.bool,
   title: PropTypes.string.isRequired,
-  emoji: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   emojiProps: PropTypes.object.isRequired,
-  skinsProps: PropTypes.object.isRequired,
+  colorsProps: PropTypes.object.isRequired,
 }
 
 Preview.defaultProps = {
-  showSkinTones: true,
+  showColorPicker: true,
   onChange: () => {},
 }

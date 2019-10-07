@@ -1,10 +1,12 @@
 <div align="center">
   <br><b>Emoji Mart</b> is a Slack-like customizable<br>emoji picker component for React
-  <br><a href="https://missive.github.io/emoji-mart">Demo</a> • <a href="https://github.com/missive/emoji-mart/blob/master/CHANGELOG.md">Changelog</a>
-  <br><br><a href="https://travis-ci.org/missive/emoji-mart"><img src="https://travis-ci.org/missive/emoji-mart.svg?branch=master" alt="Build Status"></a>
-  <br><br><img width="338" alt="picker" src="https://user-images.githubusercontent.com/436043/43481399-d9b60acc-94d3-11e8-9b3b-e5f2db8f0bd1.png">
-  <br><br><a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com"><img width="30" alt="Missive | Team email, team chat, team tasks, one app" src="https://user-images.githubusercontent.com/436043/32532559-0d15ddfc-c400-11e7-8a24-64d0157d0cb0.png"></a>
-  <br>Brought to you by the <a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com">Missive</a> team
+  <br><a href="https://deskpro.github.io/fa-picker">Demo</a> • <a href="https://github.com/deskpro/fa-picker/blob/master/CHANGELOG.md">Changelog</a>
+  <br><br><a href="https://travis-ci.org/deskpro/fa-picker"><img src="https://travis-ci.org/deskpro/fa-picker.svg?branch=master" alt="Build Status"></a>
+  <br><br><img width="338" alt="picker" src="docs/images/FaIcon.png">
+  <br>Brought to you by the <a title="Team email, team chat, team tasks, one app" href="https://deskpro.com">Deskpro</a> team
+  
+  <br><br>Heavy thanks to <a title="Team email, team chat, team tasks, one app" href="https://missiveapp.com">Missive</a> team for <a href="https://github.com/missive/emoji-mart">Emoji-mart</a>
+
 </div>
 
 ## Installation
@@ -14,7 +16,7 @@
 ## Components
 ### Picker
 ```jsx
-import 'emoji-mart/css/emoji-mart.css'
+import 'icon-mart/css/icon-mart.css'
 import { Picker } from 'emoji-mart'
 
 <Picker set='emojione' />
@@ -27,13 +29,13 @@ import { Picker } from 'emoji-mart'
 | Prop | Required | Default | Description |
 | ---- | :------: | ------- | ----------- |
 | **autoFocus** | | `false` | Auto focus the search input when mounted |
-| **color** | | `#ae65c5` | The top bar anchors select and hover color |
-| **emoji** | | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing |
+| **color** | | `#ae65c5` | The icon color |
+| **icon** | | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing |
 | **include** | | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
 | **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
 | **custom** | | `[]` | [Custom emojis](#custom-emojis) |
 | **recent** | | | Pass your own frequently used emojis as array of string IDs |
-| **emojiSize** | | `24` | The emoji width and height |
+| **iconSize** | | `24` | The emoji width and height |
 | **onClick** | | | Params: `(emoji, event) => {}`. Not called when emoji is selected with `enter` |
 | **onSelect** | | | Params: `(emoji) => {}`  |
 | **onSkinChange** | | | Params: `(skin) => {}` |
@@ -47,9 +49,6 @@ import { Picker } from 'emoji-mart'
 | **showPreview** | | `true` | Display preview section |
 | **showSkinTones** | | `true` | Display skin tones picker. Disable both this and `showPreview` to remove the footer entirely. |
 | **emojiTooltip** | | `false` | Show emojis short name when hovering (title) |
-| **skin** | | | Forces skin color: `1, 2, 3, 4, 5, 6` |
-| **defaultSkin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
-| **skinEmoji** | | | The emoji used to pick a skin tone. Uses an emoji-less skin tone picker by default |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
 | **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
 | **notFoundEmoji** | | `sleuth_or_spy` | The emoji shown when there are no search results |
@@ -60,29 +59,12 @@ import { Picker } from 'emoji-mart'
 ```js
 search: 'Search',
 clear: 'Clear', // Accessible label on "clear" button
-notfound: 'No Emoji Found',
-skintext: 'Choose your default skin tone',
+notfound: 'No Icon Found',
+colortext: 'Choose your color',
 categories: {
   search: 'Search Results',
   recent: 'Frequently Used',
-  people: 'Smileys & People',
-  nature: 'Animals & Nature',
-  foods: 'Food & Drink',
-  activity: 'Activity',
-  places: 'Travel & Places',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
   custom: 'Custom',
-},
-categorieslabel: 'Emoji categories', // Accessible title for the list of categories
-skintones: {
-  1: 'Default Skin Tone',
-  2: 'Light Skin Tone',
-  3: 'Medium-Light Skin Tone',
-  4: 'Medium Skin Tone',
-  5: 'Medium-Dark Skin Tone',
-  6: 'Dark Skin Tone',
 },
 ```
 
@@ -195,7 +177,7 @@ To have the component render `:shrug:` you would need to:
   emoji={'shrug'}
   size={24}
   fallback={(emoji, props) => {
-    return emoji ? `:${emoji.short_names[0]}:` : props.emoji
+    return emoji ? `:${emoji.short_names[0]}:` : props.icon
   }}
 />
 ```
@@ -208,7 +190,7 @@ The Emoji component being a [functional component](https://medium.com/missive-ap
   __html: Emoji({
     html: true
     set: 'apple'
-    emoji: '+1'
+    icon: '+1'
     size: 24
   })
 }}></span>
@@ -225,7 +207,7 @@ Following the `dangerouslySetInnerHTML` example above, make sure the wrapping `s
     __html: Emoji({
       html: true
       set: 'apple'
-      emoji: '+1'
+      icon: '+1'
       size: 24
     })
   }}></span>
@@ -297,27 +279,10 @@ const customIcons = {
 The `Picker` doesn’t have to be mounted for you to take advantage of the advanced search results.
 
 ```js
-import { emojiIndex } from 'emoji-mart'
+import { iconIndex } from 'emoji-mart'
 
-emojiIndex.search('christmas').map((o) => o.native)
+iconIndex.search('christmas').map((o) => o.native)
 // => [🎄, 🎅🏼, 🔔, 🎁, ⛄️, ❄️]
-```
-
-## Get emoji data from Native
-You can get emoji data from native emoji unicode using the `getEmojiDataFromNative` util function.
-
-```js
-import { getEmojiDataFromNative, Emoji } from 'emoji-mart'
-import data from 'emoji-mart/data/all.json'
-
-const emojiData = getEmojiDataFromNative('🏊🏽‍♀️', 'apple', data)
-
-<Emoji
-  emoji={emojiData}
-  set={'apple'}
-  skin={emojiData.skin || 1}
-  size={48}
-/>
 ```
 
 #### Example of `emojiData` object:
@@ -336,10 +301,10 @@ emojiData: {
 ### With custom data
 ```js
 import data from 'emoji-mart/datasets/messenger'
-import { NimbleEmojiIndex } from 'emoji-mart'
+import { NimbleIconIndex } from 'emoji-mart'
 
-let emojiIndex = new NimbleEmojiIndex(data)
-emojiIndex.search('christmas')
+let iconIndex = new NimbleIconIndex(data)
+iconIndex.search('christmas')
 ```
 
 ## Storage

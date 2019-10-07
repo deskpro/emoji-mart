@@ -1,6 +1,6 @@
 import React from 'react'
 import NimblePicker from '../nimble-picker'
-import NimbleEmojiIndex from '../../../utils/emoji-index/nimble-emoji-index'
+import NimbleIconIndex from '../../../utils/icon-index/nimble-icon-index'
 import renderer from 'react-test-renderer'
 
 import data from '../../../../data/apple'
@@ -58,6 +58,6 @@ test('with custom emoji and tooltip', () => {
     custom,
   })
   subject.handleSearch(
-    new NimbleEmojiIndex(subject.data).search('custom_', { custom }),
+    new NimbleIconIndex(subject.data).search('custom_', { custom }),
   )
 })

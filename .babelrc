@@ -4,6 +4,7 @@
     "check-es2015-constants",
     "transform-object-rest-spread",
     "transform-runtime",
+    "convert-to-json",
     [
       "module-resolver",
       {

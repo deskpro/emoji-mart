@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { search as icons } from '../svgs'
-import NimbleEmojiIndex from '../utils/emoji-index/nimble-emoji-index'
+import NimbleIconIndex from '../utils/icon-index/nimble-icon-index'
 import { throttleIdleTask } from '../utils/index'
 
 let id = 0
@@ -17,7 +17,7 @@ export default class Search extends React.PureComponent {
     }
 
     this.data = props.data
-    this.emojiIndex = new NimbleEmojiIndex(this.data)
+    this.iconIndex = new NimbleIconIndex(this.data)
     this.setRef = this.setRef.bind(this)
     this.clear = this.clear.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
@@ -47,7 +47,7 @@ export default class Search extends React.PureComponent {
       })
 
     this.props.onSearch(
-      this.emojiIndex.search(value, {
+      this.iconIndex.search(value, {
         emojisToShowFilter: this.props.emojisToShowFilter,
         maxResults: this.props.maxResults,
         include: this.props.include,

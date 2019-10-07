@@ -216,7 +216,7 @@
 
 .emoji-mart-preview-emoji,
 .emoji-mart-preview-data,
-.emoji-mart-preview-skins {
+.emoji-mart-preview-colour {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -231,12 +231,12 @@
   word-break: break-all;
 }
 
-.emoji-mart-preview-skins {
+.emoji-mart-preview-colour {
   right: 30px;
   text-align: right;
 }
 
-.emoji-mart-preview-skins.custom {
+.emoji-mart-preview-colour.custom {
   right: 10px;
   text-align: right;
 }
