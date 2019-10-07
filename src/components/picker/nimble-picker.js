@@ -31,8 +31,8 @@ export default class NimblePicker extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.RECENT_CATEGORY = { id: 'recent', name: 'Recent', icons: null }
-    this.CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', icons: [] }
+    this.RECENT_CATEGORY = { id: 'recent', label: 'Recent', icons: null }
+    this.CUSTOM_CATEGORY = { id: 'custom', label: 'Custom', icons: [] }
     this.SEARCH_CATEGORY = {
       id: 'search',
       label: 'Search',
@@ -504,10 +504,13 @@ export default class NimblePicker extends React.PureComponent {
           onScroll={this.handleScroll}
         >
           {this.getCategories().map((category, i) => {
+            if (typeof category.label === 'undefined') {
+              console.log(category)
+            }
             return (
               <Category
                 ref={this.setCategoryRef.bind(this, `category-${i}`)}
-                key={category.name}
+                key={i}
                 id={category.id}
                 name={category.label}
                 icons={category.icons}

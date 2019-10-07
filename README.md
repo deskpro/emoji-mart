@@ -30,28 +30,26 @@ import { Picker } from 'emoji-mart'
 | ---- | :------: | ------- | ----------- |
 | **autoFocus** | | `false` | Auto focus the search input when mounted |
 | **color** | | `#ae65c5` | The icon color |
-| **icon** | | `department_store` | The emoji shown when no emojis are hovered, set to an empty string to show nothing |
+| **icon** | | `department_store` | The icon shown when no icons are hovered, set to an empty string to show nothing |
 | **include** | | `[]` | Only load included categories. Accepts [I18n categories keys](#i18n). Order will be respected, except for the `recent` category which will always be the first. |
 | **exclude** | | `[]` | Don't load excluded categories. Accepts [I18n categories keys](#i18n). |
-| **custom** | | `[]` | [Custom emojis](#custom-emojis) |
-| **recent** | | | Pass your own frequently used emojis as array of string IDs |
-| **iconSize** | | `24` | The emoji width and height |
-| **onClick** | | | Params: `(emoji, event) => {}`. Not called when emoji is selected with `enter` |
-| **onSelect** | | | Params: `(emoji) => {}`  |
+| **custom** | | `[]` | [Custom icons](#custom-icons) |
+| **recent** | | | Pass your own frequently used icons as array of string IDs |
+| **iconSize** | | `24` | The icon width and height |
+| **onClick** | | | Params: `(icon, event) => {}`. Not called when icon is selected with `enter` |
+| **onSelect** | | | Params: `(icon) => {}`  |
 | **onSkinChange** | | | Params: `(skin) => {}` |
-| **perLine** | | `9` | Number of emojis per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
+| **perLine** | | `9` | Number of icons per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
-| **native** | | `false` | Renders the native unicode emoji |
-| **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'` |
-| **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
-| **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
-| **emojisToShowFilter** | | ```((emoji) => true)``` | A Fn to choose whether an emoji should be displayed or not |
+| **native** | | `false` | Renders the native unicode icon |
+| **backgroundImageFn** | | ```((set, sheetSize) => …)``` | A Fn that returns that image sheet to use for icons. Useful for avoiding a request if you have the sheet locally. |
+| **iconsToShowFilter** | | ```((icon) => true)``` | A Fn to choose whether an icon should be displayed or not |
 | **showPreview** | | `true` | Display preview section |
 | **showSkinTones** | | `true` | Display skin tones picker. Disable both this and `showPreview` to remove the footer entirely. |
-| **emojiTooltip** | | `false` | Show emojis short name when hovering (title) |
+| **iconTooltip** | | `false` | Show icons short name when hovering (title) |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
-| **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
-| **notFoundEmoji** | | `sleuth_or_spy` | The emoji shown when there are no search results |
+| **title** | | `Icon Mart™` | The title shown when no icons are hovered |
+| **notFoundIcon** | | `sleuth_or_spy` | The icon shown when there are no search results |
 | **notFound** | | | [Not Found](#not-found) |
 | **icons** | | `{}` | [Custom icons](#custom-icons) |
 

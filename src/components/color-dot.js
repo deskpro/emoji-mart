@@ -78,7 +78,7 @@ export default class ColorDot extends React.PureComponent {
 
 ColorDot.propTypes /* remove-proptypes */ = {
   onChange: PropTypes.func,
-  color: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
   i18n: PropTypes.object,
 }
 

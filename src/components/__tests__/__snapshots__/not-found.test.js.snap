@@ -4,28 +4,6 @@ exports[`Renders <NotFound> component 1`] = `
 <div
   className="emoji-mart-no-results"
 >
-  <span
-    aria-label="🕵️, sleuth_or_spy"
-    className="emoji-mart-emoji emoji-mart-emoji-native"
-    onClick={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    title={null}
-  >
-    <span
-      style={
-        Object {
-          "display": "inline-block",
-          "fontSize": 38,
-          "height": 38,
-          "width": 38,
-          "wordBreak": "keep-all",
-        }
-      }
-    >
-      🕵️
-    </span>
-  </span>
   <div
     className="emoji-mart-no-results-label"
   >

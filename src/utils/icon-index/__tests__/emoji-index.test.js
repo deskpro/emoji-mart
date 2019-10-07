@@ -1,41 +1,29 @@
 import emojiIndex from '../icon-index.js'
 
 test('should work', () => {
-  expect(emojiIndex.search('pineapple')).toEqual([
-    {
-      id: 'pineapple',
-      name: 'Pineapple',
-      short_names: ['pineapple'],
-      colons: ':pineapple:',
-      emoticons: [],
-      unified: '1f34d',
-      skin: null,
-      native: '🍍',
-    },
+  expect(emojiIndex.search('wheelchair')).toEqual([
+    'accessible-icon',
+    'crutch',
+    'wheelchair',
   ])
 })
 
 test('should filter only emojis we care about, exclude pineapple', () => {
   let emojisToShowFilter = (data) => {
-    data.unified !== '1F34D'
+    data !== 'deskpro'
   }
-  expect(
-    emojiIndex.search('apple', { emojisToShowFilter }).map((obj) => obj.id),
-  ).not.toContain('pineapple')
-})
-
-test('can include/exclude categories', () => {
-  expect(emojiIndex.search('flag', { include: ['people'] })).toEqual([])
+  expect(emojiIndex.search('desk', { emojisToShowFilter })).not.toContain(
+    'deskpro',
+  )
 })
 
 test('can search for thinking_face', () => {
-  expect(emojiIndex.search('thinking_fac').map((x) => x.id)).toEqual([
-    'thinking_face',
+  expect(emojiIndex.search('fort awesome')).toEqual([
+    'fort-awesome',
+    'fort-awesome-alt',
   ])
 })
 
-test('can search for woman-facepalming', () => {
-  expect(emojiIndex.search('woman-facep').map((x) => x.id)).toEqual([
-    'woman-facepalming',
-  ])
+test('can search for smile-beam', () => {
+  expect(emojiIndex.search('deskp')).toEqual(['deskpro'])
 })

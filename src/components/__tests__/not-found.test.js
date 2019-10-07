@@ -2,7 +2,8 @@ import React from 'react'
 import NotFound from '../not-found'
 import renderer from 'react-test-renderer'
 
-import data from '../../../data/apple'
+import icons from '../../../data/icons.yml'
+import categories from '../../../data/categories.yml'
 
 const i18n = {
   notfound: 'No Emoji Found',
@@ -20,7 +21,7 @@ test('Renders <NotFound> component', () => {
   }
   const component = renderer.create(
     <NotFound
-      data={data}
+      data={{ icons, categories }}
       notFound={() => {}}
       notFoundEmoji={'sleuth_or_spy'}
       emojiProps={emojiProps}
