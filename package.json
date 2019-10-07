@@ -1,6 +1,6 @@
 {
   "name": "@deskpro/fa-picker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Customizable Slack-like font awesome icon picker for React based on emoji-mart",
   "main": "dist/index.js",
   "module": "dist-es/index.js",
