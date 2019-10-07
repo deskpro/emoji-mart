@@ -8,3 +8,9 @@ before_script:
 branches:
   only:
   - master
+deploy:
+  provider: npm
+  api_key: '${NPM_TOKEN}'
+  skip_cleanup: true
+  on:
+    tags: true
