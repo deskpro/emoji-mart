@@ -1,4 +1,4 @@
-var NAMESPACE = 'emoji-mart'
+var NAMESPACE = 'fa-picker'
 
 const _JSON = JSON
 
