@@ -51,7 +51,7 @@ export default class NimbleIconIndex {
 
   search(
     value,
-    { emojisToShowFilter, maxResults, include, exclude, custom = [] } = {},
+    { iconsToShowFilter, maxResults, include, exclude, custom = [] } = {},
   ) {
     maxResults || (maxResults = 75)
     include || (include = [])
@@ -169,9 +169,9 @@ export default class NimbleIconIndex {
     }
 
     if (results) {
-      if (emojisToShowFilter) {
+      if (iconsToShowFilter) {
         results = results.filter((result) =>
-          emojisToShowFilter(pool[result.id]),
+          iconsToShowFilter(pool[result.id]),
         )
       }
 

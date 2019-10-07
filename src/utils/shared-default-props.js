@@ -28,7 +28,7 @@ const PickerDefaultProps = {
   native: EmojiDefaultProps.native,
   sheetSize: EmojiDefaultProps.sheetSize,
   backgroundImageFn: EmojiDefaultProps.backgroundImageFn,
-  emojisToShowFilter: null,
+  iconsToShowFilter: null,
   showPreview: true,
   showColorPicker: true,
   emojiTooltip: EmojiDefaultProps.tooltip,

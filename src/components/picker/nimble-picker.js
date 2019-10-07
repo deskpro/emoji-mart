@@ -81,13 +81,13 @@ export default class NimblePicker extends React.PureComponent {
         continue
       }
 
-      if (props.emojisToShowFilter) {
+      if (props.iconsToShowFilter) {
         let newEmojis = []
 
         const { icons } = category
         for (let emojiIndex = 0; emojiIndex < icons.length; emojiIndex++) {
           const emoji = icons[emojiIndex]
-          if (props.emojisToShowFilter(this.data.emojis[emoji] || emoji)) {
+          if (props.iconsToShowFilter(this.data.emojis[emoji] || emoji)) {
             newEmojis.push(emoji)
           }
         }
@@ -452,7 +452,7 @@ export default class NimblePicker extends React.PureComponent {
         color,
         native,
         backgroundImageFn,
-        emojisToShowFilter,
+        iconsToShowFilter,
         showPreview,
         showColorPicker,
         emojiTooltip,
@@ -491,7 +491,7 @@ export default class NimblePicker extends React.PureComponent {
           onSearch={this.handleSearch}
           data={this.data}
           i18n={this.i18n}
-          emojisToShowFilter={emojisToShowFilter}
+          iconsToShowFilter={iconsToShowFilter}
           include={include}
           exclude={exclude}
           custom={this.CUSTOM_CATEGORY.emojis}

@@ -9,8 +9,15 @@ branches:
   only:
   - master
 deploy:
-  provider: npm
-  api_key: '${NPM_TOKEN}'
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: npm
+    email: 'julien.ducro@deskpro.com'
+    api_key: '${NPM_TOKEN}'
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: script
+    skip_cleanup: true
+    script:
+      - lerna run --scope @deskpro/content-editor-storybook deploy-storybook -- -- --ci
+    on:
+      branch: master

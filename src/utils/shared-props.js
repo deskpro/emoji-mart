@@ -42,7 +42,7 @@ const PickerPropTypes = {
   native: PropTypes.bool,
   backgroundImageFn: EmojiPropTypes.backgroundImageFn,
   sheetSize: EmojiPropTypes.sheetSize,
-  emojisToShowFilter: PropTypes.func,
+  iconsToShowFilter: PropTypes.func,
   showPreview: PropTypes.bool,
   showColorPicker: PropTypes.bool,
   emojiTooltip: EmojiPropTypes.tooltip,

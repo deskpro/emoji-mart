@@ -48,7 +48,7 @@ export default class Search extends React.PureComponent {
 
     this.props.onSearch(
       this.iconIndex.search(value, {
-        emojisToShowFilter: this.props.emojisToShowFilter,
+        iconsToShowFilter: this.props.iconsToShowFilter,
         maxResults: this.props.maxResults,
         include: this.props.include,
         exclude: this.props.exclude,
@@ -117,13 +117,13 @@ export default class Search extends React.PureComponent {
 Search.propTypes /* remove-proptypes */ = {
   onSearch: PropTypes.func,
   maxResults: PropTypes.number,
-  emojisToShowFilter: PropTypes.func,
+  iconsToShowFilter: PropTypes.func,
   autoFocus: PropTypes.bool,
 }
 
 Search.defaultProps = {
   onSearch: () => {},
   maxResults: 75,
-  emojisToShowFilter: null,
+  iconsToShowFilter: null,
   autoFocus: false,
 }
