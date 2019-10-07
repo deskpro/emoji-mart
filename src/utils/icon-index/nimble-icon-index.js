@@ -170,9 +170,7 @@ export default class NimbleIconIndex {
 
     if (results) {
       if (iconsToShowFilter) {
-        results = results.filter((result) =>
-          iconsToShowFilter(pool[result.id]),
-        )
+        results = results.filter((result) => iconsToShowFilter(pool[result.id]))
       }
 
       if (results && results.length > maxResults) {
