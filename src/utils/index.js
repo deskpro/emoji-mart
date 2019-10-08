@@ -60,45 +60,49 @@ function getSanitizedData() {
 
 function getIcon() {}
 
-function getData(emoji, skin, set, data) {
-  var emojiData = {}
+function getData(icon, skin, set, data) {
+  var iconData = {}
 
-  if (typeof emoji == 'string') {
-    let matches = emoji.match(COLONS_REGEX)
+  if (!icon) {
+    return null
+  }
+
+  if (typeof icon == 'string') {
+    let matches = icon.match(COLONS_REGEX)
 
     if (matches) {
-      emoji = matches[1]
+      icon = matches[1]
 
       if (matches[2]) {
         skin = parseInt(matches[2], 10)
       }
     }
 
-    if (data.icons.hasOwnProperty(emoji)) {
-      emojiData = data.icons[emoji]
+    if (data.icons.hasOwnProperty(icon)) {
+      iconData = data.icons[icon]
     } else {
       return null
     }
-  } else if (emoji.id) {
-    if (data.icons.hasOwnProperty(emoji.id)) {
-      emojiData = data.icons[emoji.id]
-      skin || (skin = emoji.skin)
+  } else if (icon.id) {
+    if (data.icons.hasOwnProperty(icon.id)) {
+      iconData = data.icons[icon.id]
+      skin || (skin = icon.skin)
     }
   }
 
-  if (!Object.keys(emojiData).length) {
-    emojiData = emoji
-    emojiData.custom = true
+  if (!Object.keys(iconData).length) {
+    iconData = icon
+    iconData.custom = true
   }
 
-  if (emojiData.skin_variations && skin > 1) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
+  if (iconData.skin_variations && skin > 1) {
+    iconData = JSON.parse(_JSON.stringify(iconData))
 
     var skinKey = SKINS[skin - 1],
-      variationData = emojiData.skin_variations[skinKey]
+      variationData = iconData.skin_variations[skinKey]
 
-    if (!variationData.variations && emojiData.variations) {
-      delete emojiData.variations
+    if (!variationData.variations && iconData.variations) {
+      delete iconData.variations
     }
 
     if (
@@ -107,21 +111,21 @@ function getData(emoji, skin, set, data) {
           variationData[`has_img_${set}`])) ||
       !set
     ) {
-      emojiData.skin_tone = skin
+      iconData.skin_tone = skin
 
       for (let k in variationData) {
         let v = variationData[k]
-        emojiData[k] = v
+        iconData[k] = v
       }
     }
   }
 
-  if (emojiData.variations && emojiData.variations.length) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
-    emojiData.unified = emojiData.variations.shift()
+  if (iconData.variations && iconData.variations.length) {
+    iconData = JSON.parse(_JSON.stringify(iconData))
+    iconData.unified = iconData.variations.shift()
   }
 
-  return emojiData
+  return iconData
 }
 
 function getEmojiDataFromNative(nativeString, set, data) {
