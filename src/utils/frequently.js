@@ -10,15 +10,14 @@ function init() {
   frequently = store.get('frequently')
 }
 
-function add(emoji) {
+function add(icon) {
   if (!initialized) init()
-  var { id } = emoji
 
   frequently || (frequently = defaults)
-  frequently[id] || (frequently[id] = 0)
-  frequently[id] += 1
+  frequently[icon] || (frequently[icon] = 0)
+  frequently[icon] += 1
 
-  store.set('last', id)
+  store.set('last', icon)
   store.set('frequently', frequently)
 }
 
@@ -30,8 +29,10 @@ function get(perLine) {
     const result = []
 
     for (let i = 0; i < perLine; i++) {
-      defaults[DEFAULTS[i]] = perLine - i
-      result.push(DEFAULTS[i])
+      if (DEFAULTS[i]) {
+        defaults[DEFAULTS[i]] = perLine - i
+        result.push(DEFAULTS[i])
+      }
     }
 
     return result

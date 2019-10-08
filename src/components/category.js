@@ -117,6 +117,8 @@ export default class Category extends React.Component {
             return id
           })
           .filter((id) => !!getData(id, null, null, this.data))
+      } else {
+        return null
       }
 
       if (icons.length === 0 && frequentlyUsed.length > 0) {
