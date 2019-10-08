@@ -16,7 +16,7 @@ export default class Preview extends React.PureComponent {
   render() {
     var { icon } = this.state,
       {
-        emojiProps,
+        iconProps,
         colorsProps,
         showColorPicker,
         title,
@@ -47,7 +47,7 @@ export default class Preview extends React.PureComponent {
               key: icon.id,
               icon,
               data: this.data,
-              ...emojiProps,
+              ...iconProps,
             })}
           </div>
 
@@ -75,7 +75,7 @@ export default class Preview extends React.PureComponent {
           <div className="emoji-mart-preview-emoji" aria-hidden="true">
             {idleEmoji &&
               idleEmoji.length &&
-              Icon({ icon: idleEmoji, data: this.data, ...emojiProps })}
+              Icon({ icon: idleEmoji, data: this.data, ...iconProps })}
           </div>
 
           <div className="emoji-mart-preview-data" aria-hidden="true">
@@ -105,7 +105,7 @@ Preview.propTypes /* remove-proptypes */ = {
   showColorPicker: PropTypes.bool,
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  emojiProps: PropTypes.object.isRequired,
+  iconProps: PropTypes.object.isRequired,
   colorsProps: PropTypes.object.isRequired,
 }
 

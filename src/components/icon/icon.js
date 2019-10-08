@@ -1,12 +1,12 @@
 import React from 'react'
 
-const _handleClick = (e, props) => {
+const _handleClick = (e, props, style) => {
   if (!props.onClick) {
     return
   }
   var { onClick } = props
 
-  onClick(props.icon, e)
+  onClick(props.icon, style, e)
 }
 
 const _handleOver = (e, props) => {
@@ -56,7 +56,7 @@ const Icon = (props) => {
   }
   return (
     <Tag.name
-      onClick={(e) => _handleClick(e, props)}
+      onClick={(e) => _handleClick(e, props, iconStyle)}
       onMouseEnter={(e) => _handleOver(e, props)}
       onMouseLeave={(e) => _handleLeave(e, props)}
       title={title}

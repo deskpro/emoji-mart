@@ -29,17 +29,17 @@ export default class Category extends React.Component {
         native,
         hasStickyPosition,
         icons,
-        emojiProps,
+        iconProps,
       } = this.props,
-      { color, size, set } = emojiProps,
+      { color, size, set } = iconProps,
       {
         perLine: nextPerLine,
         native: nextNative,
         hasStickyPosition: nextHasStickyPosition,
         icons: nextIcons,
-        emojiProps: nextEmojiProps,
+        iconProps: nextIconProps,
       } = nextProps,
-      { color: nextColor, size: nextSize, set: nextSet } = nextEmojiProps,
+      { color: nextColor, size: nextSize, set: nextSet } = nextIconProps,
       shouldUpdate = false
 
     if (name == 'Recent' && perLine != nextPerLine) {
@@ -156,7 +156,7 @@ export default class Category extends React.Component {
         id,
         name,
         hasStickyPosition,
-        emojiProps,
+        iconProps,
         i18n,
         notFound,
         notFoundEmoji,
@@ -209,7 +209,7 @@ export default class Category extends React.Component {
               <li
                 key={(icon.short_names && icon.short_names.join('_')) || icon}
               >
-                {Icon({ icon, data: this.data, ...emojiProps })}
+                {Icon({ icon, data: this.data, ...iconProps })}
               </li>
             ))}
         </ul>
@@ -220,7 +220,7 @@ export default class Category extends React.Component {
             notFound={notFound}
             notFoundEmoji={notFoundEmoji}
             data={this.data}
-            emojiProps={emojiProps}
+            iconProps={iconProps}
           />
         )}
       </section>
@@ -234,7 +234,7 @@ Category.propTypes /* remove-proptypes */ = {
   name: PropTypes.string.isRequired,
   native: PropTypes.bool.isRequired,
   perLine: PropTypes.number.isRequired,
-  emojiProps: PropTypes.object.isRequired,
+  iconProps: PropTypes.object.isRequired,
   recent: PropTypes.arrayOf(PropTypes.string),
   notFound: PropTypes.func,
   notFoundEmoji: PropTypes.string.isRequired,

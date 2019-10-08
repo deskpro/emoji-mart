@@ -23851,7 +23851,7 @@ class Preview extends __WEBPACK_IMPORTED_MODULE_1_react___default.a.PureComponen
   render() {
     var { emoji } = this.state,
         {
-      emojiProps,
+      iconProps,
       coloursProps,
       showSkinTones,
       title,
@@ -23964,7 +23964,7 @@ Preview.propTypes /* remove-proptypes */ = {
   showSkinTones: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.bool,
   title: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired,
   icon: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.string.isRequired,
-  emojiProps: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.object.isRequired,
+  iconProps: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.object.isRequired,
   coloursProps: __WEBPACK_IMPORTED_MODULE_2_prop_types___default.a.object.isRequired
 };
 

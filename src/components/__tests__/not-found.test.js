@@ -10,7 +10,7 @@ const i18n = {
 }
 
 test('Renders <NotFound> component', () => {
-  const emojiProps = {
+  const iconProps = {
     native: true,
     skin: 1,
     size: 24,
@@ -24,7 +24,7 @@ test('Renders <NotFound> component', () => {
       data={{ icons, categories }}
       notFound={() => {}}
       notFoundEmoji={'sleuth_or_spy'}
-      emojiProps={emojiProps}
+      iconProps={iconProps}
       i18n={i18n}
     />,
   )

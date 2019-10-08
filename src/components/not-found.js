@@ -5,13 +5,13 @@ import Icon from './icon/icon'
 
 export default class NotFound extends React.PureComponent {
   render() {
-    const { data, emojiProps, i18n, notFound, notFoundEmoji } = this.props
+    const { data, iconProps, i18n, notFound, notFoundEmoji } = this.props
 
     const component = (notFound && notFound()) || (
       <div className="emoji-mart-no-results">
         {Icon({
           data: data,
-          ...emojiProps,
+          ...iconProps,
           size: 38,
           emoji: notFoundEmoji,
           onOver: null,
@@ -28,5 +28,5 @@ export default class NotFound extends React.PureComponent {
 
 NotFound.propTypes /* remove-proptypes */ = {
   notFound: PropTypes.func.isRequired,
-  emojiProps: PropTypes.object.isRequired,
+  iconProps: PropTypes.object.isRequired,
 }

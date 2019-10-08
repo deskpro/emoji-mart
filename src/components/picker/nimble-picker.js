@@ -213,14 +213,14 @@ export default class NimblePicker extends React.PureComponent {
     }, 16)
   }
 
-  handleEmojiClick(icon, e) {
-    this.props.onClick(icon, e)
-    this.handleEmojiSelect(icon)
+  handleEmojiClick(icon, style, e) {
+    this.props.onClick(icon, style, e)
+    this.handleEmojiSelect(icon, style)
   }
 
-  handleEmojiSelect(icon) {
+  handleEmojiSelect(icon, style) {
     const { color } = this.state
-    this.props.onSelect(icon, color)
+    this.props.onSelect(icon, style, color)
     if (!this.hideRecent && !this.props.recent) frequently.add(icon)
 
     var component = this.categoryRefs['category-1']
@@ -371,19 +371,19 @@ export default class NimblePicker extends React.PureComponent {
 
     switch (e.keyCode) {
       case 13:
-        let emoji
+        let icon
 
         if (
           this.SEARCH_CATEGORY.icons &&
           this.SEARCH_CATEGORY.icons.length &&
-          (emoji = getSanitizedData(
+          (icon = getSanitizedData(
             this.SEARCH_CATEGORY.icons[0],
             this.state.color,
             this.props.set,
             this.props.data,
           ))
         ) {
-          this.handleEmojiSelect(emoji)
+          this.handleEmojiSelect(icon)
         }
 
         handled = true
@@ -528,7 +528,7 @@ export default class NimblePicker extends React.PureComponent {
                     ? this.CUSTOM_CATEGORY.icons
                     : undefined
                 }
-                emojiProps={{
+                iconProps={{
                   native: native,
                   color: color,
                   size: emojiSize,
@@ -559,7 +559,7 @@ export default class NimblePicker extends React.PureComponent {
               icon={icon}
               showColorPicker={showColorPicker}
               showPreview={showPreview}
-              emojiProps={{
+              iconProps={{
                 native: native,
                 size: 38,
                 color: color,
