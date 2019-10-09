@@ -584,7 +584,10 @@ export default class NimblePicker extends React.PureComponent {
             notFoundEmoji={notFoundEmoji}
           />
           {showDropZone && (
-            <CustomDropzone i18n={this.i18n} onAcceptedFile={onAcceptedFiles} />
+            <CustomDropzone
+              i18n={this.i18n}
+              onAcceptedFiles={onAcceptedFiles}
+            />
           )}
         </div>
       </section>

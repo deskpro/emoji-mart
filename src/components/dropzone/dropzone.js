@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-export default function CustomDropzone(onFileAccepted, i18n) {
+export default function CustomDropzone(props) {
   const onDrop = useCallback((acceptedFiles) => {
-    onFileAccepted(acceptedFiles)
+    props.onAcceptedFiles(acceptedFiles)
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
