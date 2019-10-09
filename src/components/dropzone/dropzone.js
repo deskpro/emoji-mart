@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { useDropzone } from 'react-dropzone/dist'
 
 export default function CustomDropzone(onFileAccepted, i18n) {
   const onDrop = useCallback((acceptedFiles) => {
