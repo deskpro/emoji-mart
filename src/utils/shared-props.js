@@ -47,6 +47,7 @@ const PickerPropTypes = {
   showPreview: PropTypes.bool,
   showColorPicker: PropTypes.bool,
   showDropZone: PropTypes.bool,
+  showCustom: PropTypes.bool,
   emojiTooltip: EmojiPropTypes.tooltip,
   include: PropTypes.arrayOf(PropTypes.string),
   exclude: PropTypes.arrayOf(PropTypes.string),

@@ -429,6 +429,7 @@ export default class NimblePicker extends React.PureComponent {
         showPreview,
         showColorPicker,
         showDropZone,
+        showCustom,
         emojiTooltip,
         include,
         exclude,
@@ -450,10 +451,12 @@ export default class NimblePicker extends React.PureComponent {
         onKeyDown={this.handleKeyDown}
       >
         <div className="emoji-mart-bar">
-          <Tabs active={activeTab} onChange={this.handleTabChange}>
-            <TabLink name="icons">{this.i18n.icons}</TabLink>
-            <TabLink name="custom">{this.i18n.custom}</TabLink>
-          </Tabs>
+          {showCustom && (
+            <Tabs active={activeTab} onChange={this.handleTabChange}>
+              <TabLink name="icons">{this.i18n.icons}</TabLink>
+              <TabLink name="custom">{this.i18n.custom}</TabLink>
+            </Tabs>
+          )}
         </div>
 
         <Search
@@ -550,46 +553,48 @@ export default class NimblePicker extends React.PureComponent {
           )}
         </div>
 
-        <div
-          className="custom"
-          style={{ display: activeTab === 'custom' ? 'block' : 'none' }}
-        >
-          <Category
-            ref={this.setCategoryRef.bind(this, `category-custom`)}
-            id="custom"
-            name="Custom"
-            icons={custom}
-            custom={custom}
-            perLine={perLine}
-            native={native}
-            hasStickyPosition={this.hasStickyPosition}
-            data={this.data}
-            i18n={this.i18n}
-            iconProps={{
-              native: native,
-              color: color,
-              size: emojiSize,
-              set: set,
-              sheetSize: sheetSize,
-              sheetColumns: sheetColumns,
-              sheetRows: sheetRows,
-              forceSize: native,
-              tooltip: emojiTooltip,
-              backgroundImageFn: backgroundImageFn,
-              onOver: this.handleEmojiOver,
-              onLeave: this.handleEmojiLeave,
-              onClick: this.handleIconClick,
-            }}
-            notFound={notFound}
-            notFoundEmoji={notFoundEmoji}
-          />
-          {showDropZone && (
-            <CustomDropzone
+        {showCustom && (
+          <div
+            className="custom"
+            style={{ display: activeTab === 'custom' ? 'block' : 'none' }}
+          >
+            <Category
+              ref={this.setCategoryRef.bind(this, `category-custom`)}
+              id="custom"
+              name="Custom"
+              icons={custom}
+              custom={custom}
+              perLine={perLine}
+              native={native}
+              hasStickyPosition={this.hasStickyPosition}
+              data={this.data}
               i18n={this.i18n}
-              onAcceptedFiles={onAcceptedFiles}
+              iconProps={{
+                native: native,
+                color: color,
+                size: emojiSize,
+                set: set,
+                sheetSize: sheetSize,
+                sheetColumns: sheetColumns,
+                sheetRows: sheetRows,
+                forceSize: native,
+                tooltip: emojiTooltip,
+                backgroundImageFn: backgroundImageFn,
+                onOver: this.handleEmojiOver,
+                onLeave: this.handleEmojiLeave,
+                onClick: this.handleIconClick,
+              }}
+              notFound={notFound}
+              notFoundEmoji={notFoundEmoji}
             />
-          )}
-        </div>
+            {showDropZone && (
+              <CustomDropzone
+                i18n={this.i18n}
+                onAcceptedFiles={onAcceptedFiles}
+              />
+            )}
+          </div>
+        )}
       </section>
     )
   }
