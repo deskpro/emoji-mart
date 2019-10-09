@@ -36,9 +36,8 @@ import { Picker } from 'emoji-mart'
 | **custom** | | `[]` | [Custom icons](#custom-icons) |
 | **recent** | | | Pass your own frequently used icons as array of string IDs |
 | **iconSize** | | `24` | The icon width and height |
-| **onClick** | | | Params: `(icon, event) => {}`. Not called when icon is selected with `enter` |
-| **onSelect** | | | Params: `(icon) => {}`  |
-| **onSkinChange** | | | Params: `(skin) => {}` |
+| **onClick** | | | Params: `(icon, style, color, event) => {}`. Not called when icon is selected with `enter` |
+| **onSelect** | | | Params: `(icon, style, color) => {}`  |
 | **perLine** | | `9` | Number of icons per line. While there’s no minimum or maximum, this will affect the picker’s width. This will set *Frequently Used* length as well (`perLine * 4`) |
 | **i18n** | | [`{…}`](#i18n) | [An object](#i18n) containing localized strings |
 | **native** | | `false` | Renders the native unicode icon |

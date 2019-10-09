@@ -33,15 +33,27 @@ const Icon = (props) => {
     },
     children = props.children,
     className = '',
-    title = null
+    title = null,
+    iconStyle = null
 
   const meta = props.data.icons[props.icon]
   if (!meta) {
-    return null
+    if (props.icon.imageUrl) {
+      style = {
+        ...style,
+        backgroundImage: `url(${props.icon.imageUrl})`,
+        backgroundSize: 'contain',
+      }
+      title = props.icon.name
+      className = 'custom-icon'
+    } else {
+      return null
+    }
+  } else {
+    title = meta.label
+    iconStyle = meta.styles[0]
+    className = `fa${iconStyle[0]} fa-${props.icon}`
   }
-  title = meta.label
-  const iconStyle = meta.styles[0]
-  className = `fa${iconStyle[0]} fa-${props.icon}`
 
   var Tag = {
     name: 'span',

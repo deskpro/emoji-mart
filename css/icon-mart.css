@@ -12,6 +12,7 @@
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   background: #fff;
+  position: relative;
 }
 
 .emoji-mart .emoji-mart-emoji {
@@ -21,6 +22,40 @@
 .emoji-mart-bar {
   border: 0 solid #d9d9d9;
 }
+
+.emoji-mart-bar .dp-tabs {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.emoji-mart-bar .dp-tabs__tab {
+  flex-grow: 1;
+  cursor: pointer;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #aab0b1;
+  transition: all 0.2s ease-in-out;
+  border-bottom: 1px solid #d4d7d8;
+  padding: 8px 12px;
+}
+
+.emoji-mart-bar .dp-tabs__tab:hover {
+  color: #4c4f50;
+}
+
+.emoji-mart-bar .dp-tabs__tab:active,
+.emoji-mart-bar .dp-tabs__tab.dp-tabs__tab--active {
+  padding: 8px 12px 7px 12px;
+  color: #4c4f50;
+  border-bottom: 2px solid #4696dc;
+}
+
 .emoji-mart-bar:first-child {
   border-bottom-width: 1px;
   border-top-left-radius: 5px;
@@ -141,6 +176,12 @@
   width: 100%; height: 100%;
   background-color: #f4f4f4;
   border-radius: 100%;
+}
+
+.emoji-mart-category .emoji-mart-emoji i.custom-icon {
+  height: 20px;
+  width: 20px;
+  display: block;
 }
 
 .emoji-mart-category-label {
@@ -373,6 +414,10 @@
   border-radius: 10%;
 }
 
+.emoji-mart > .custom {
+  height: 341px;
+}
+
 .emoji-mart-skin-swatches.custom.opened .emoji-mart-skin-swatch.custom {
   width: 36px;
   height: 38px;
@@ -414,6 +459,47 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.fa-picker-dropzone {
+  position: absolute;
+  bottom: 0;
+  font-size: 15px;
+  width: 100%;
+  border: 2px dashed #c6c6c6;
+  border-radius: 4px;
+}
+.fa-picker-dropzone:focus {
+  outline: none;
+}
+.fa-picker-dropzone > div:focus {
+  outline: none;
+}
+
+.fa-picker-dropzone .choose,
+.fa-picker-dropzone .or,
+.fa-picker-dropzone .dnd {
+  display: inline-block;
+  padding: 5px;
+}
+
+.fa-picker-dropzone .choose {
+  border: 2px solid #dce4eb;
+  border-radius: 4px;
+  margin: 10px;
+  width: 146px;
+  cursor: pointer;
+}
+.fa-picker-dropzone .dnd .far,
+.fa-picker-dropzone .choose .far {
+  margin-right: 5px;
+}
+.fa-picker-dropzone .dnd {
+  width: 38%;
+}
+.fa-picker-dropzone .drop {
+  text-align: center;
+  width: 100%;
 }
 
 

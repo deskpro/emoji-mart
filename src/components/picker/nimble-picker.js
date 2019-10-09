@@ -9,17 +9,21 @@ import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar, getSanitizedData } from '../../utils'
 import { PickerPropTypes } from '../../utils/shared-props'
 
-import Anchors from '../anchors'
+import Tabs from '../tabs/Tabs'
+import TabLink from '../tabs/TabLink'
 import Category from '../category'
 import Preview from '../preview'
 import Search from '../search'
 import { PickerDefaultProps } from '../../utils/shared-default-props'
+import CustomDropzone from '../dropzone/dropzone'
 
 const I18N = {
   search: 'Search',
   clear: 'Clear', // Accessible label on "clear" button
   notfound: 'No Icon Found',
   colorText: 'Choose your default color',
+  custom: 'Custom',
+  icons: 'Icons',
   categories: {
     search: 'Search Results',
     recent: 'Frequently Used',
@@ -37,7 +41,6 @@ export default class NimblePicker extends React.PureComponent {
       id: 'search',
       label: 'Search',
       icons: null,
-      anchor: false,
     }
 
     this.data = props.data
@@ -46,6 +49,7 @@ export default class NimblePicker extends React.PureComponent {
     this.state = {
       color: props.color || store.get('color') || props.defaultColor,
       firstRender: true,
+      activeTab: 'icons',
     }
 
     this.categories = []
@@ -125,8 +129,6 @@ export default class NimblePicker extends React.PureComponent {
 
     this.categories.unshift(this.SEARCH_CATEGORY)
 
-    this.setAnchorsRef = this.setAnchorsRef.bind(this)
-    this.handleAnchorClick = this.handleAnchorClick.bind(this)
     this.setSearchRef = this.setSearchRef.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.setScrollRef = this.setScrollRef.bind(this)
@@ -134,8 +136,9 @@ export default class NimblePicker extends React.PureComponent {
     this.handleScrollPaint = this.handleScrollPaint.bind(this)
     this.handleEmojiOver = this.handleEmojiOver.bind(this)
     this.handleEmojiLeave = this.handleEmojiLeave.bind(this)
-    this.handleEmojiClick = this.handleEmojiClick.bind(this)
-    this.handleEmojiSelect = this.handleEmojiSelect.bind(this)
+    this.handleIconClick = this.handleIconClick.bind(this)
+    this.handleIconSelect = this.handleIconSelect.bind(this)
+    this.handleTabChange = this.handleTabChange.bind(this)
     this.setPreviewRef = this.setPreviewRef.bind(this)
     this.handleColorChange = this.handleColorChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
@@ -213,12 +216,12 @@ export default class NimblePicker extends React.PureComponent {
     }, 16)
   }
 
-  handleEmojiClick(icon, style, e) {
+  handleIconClick(icon, style, e) {
     this.props.onClick(icon, style, e)
-    this.handleEmojiSelect(icon, style)
+    this.handleIconSelect(icon, style)
   }
 
-  handleEmojiSelect(icon, style) {
+  handleIconSelect(icon, style) {
     const { color } = this.state
     this.props.onSelect(icon, style, color)
     if (!this.hideRecent && !this.props.recent) frequently.add(icon)
@@ -296,15 +299,6 @@ export default class NimblePicker extends React.PureComponent {
       }
     }
 
-    if (activeCategory) {
-      let { anchors } = this,
-        { name: categoryName } = activeCategory
-
-      if (anchors.state.selected != categoryName) {
-        anchors.setState({ selected: categoryName })
-      }
-    }
-
     this.scrollTop = scrollTop
   }
 
@@ -327,35 +321,6 @@ export default class NimblePicker extends React.PureComponent {
     this.handleScroll()
   }
 
-  handleAnchorClick(category, i) {
-    var component = this.categoryRefs[`category-${i}`],
-      { scroll, anchors } = this,
-      scrollToComponent = null
-
-    scrollToComponent = () => {
-      if (component) {
-        let { top } = component
-
-        if (category.first) {
-          top = 0
-        } else {
-          top += 1
-        }
-
-        scroll.scrollTop = top
-      }
-    }
-
-    if (this.SEARCH_CATEGORY.icons) {
-      this.handleSearch(null)
-      this.search.clear()
-
-      window.requestAnimationFrame(scrollToComponent)
-    } else {
-      scrollToComponent()
-    }
-  }
-
   handleColorChange(color) {
     var newState = { color: color },
       { onColorChange } = this.props
@@ -364,6 +329,12 @@ export default class NimblePicker extends React.PureComponent {
     store.update(newState)
 
     onColorChange(color)
+  }
+
+  handleTabChange(activeTab) {
+    this.setState({
+      activeTab,
+    })
   }
 
   handleKeyDown(e) {
@@ -383,7 +354,7 @@ export default class NimblePicker extends React.PureComponent {
             this.props.data,
           ))
         ) {
-          this.handleEmojiSelect(icon)
+          this.handleIconSelect(icon)
         }
 
         handled = true
@@ -414,8 +385,8 @@ export default class NimblePicker extends React.PureComponent {
       : this.categories
   }
 
-  setAnchorsRef(c) {
-    this.anchors = c
+  setTabsRef(c) {
+    this.tabs = c
   }
 
   setSearchRef(c) {
@@ -451,11 +422,13 @@ export default class NimblePicker extends React.PureComponent {
         icon,
         iconColor,
         color,
+        custom,
         native,
         backgroundImageFn,
         iconsToShowFilter,
         showPreview,
         showColorPicker,
+        showDropZone,
         emojiTooltip,
         include,
         exclude,
@@ -464,8 +437,9 @@ export default class NimblePicker extends React.PureComponent {
         skinEmoji,
         notFound,
         notFoundEmoji,
+        onAcceptedFiles,
       } = this.props,
-      { color } = this.state,
+      { color, activeTab } = this.state,
       width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
 
     return (
@@ -476,15 +450,10 @@ export default class NimblePicker extends React.PureComponent {
         onKeyDown={this.handleKeyDown}
       >
         <div className="emoji-mart-bar">
-          <Anchors
-            ref={this.setAnchorsRef}
-            data={this.data}
-            i18n={this.i18n}
-            color={color}
-            categories={this.categories}
-            onAnchorClick={this.handleAnchorClick}
-            icons={this.icons}
-          />
+          <Tabs active={activeTab} onChange={this.handleTabChange}>
+            <TabLink name="icons">{this.i18n.icons}</TabLink>
+            <TabLink name="custom">{this.i18n.custom}</TabLink>
+          </Tabs>
         </div>
 
         <Search
@@ -500,84 +469,124 @@ export default class NimblePicker extends React.PureComponent {
         />
 
         <div
-          ref={this.setScrollRef}
-          className="emoji-mart-scroll"
-          onScroll={this.handleScroll}
+          className="icons"
+          style={{ display: activeTab === 'icons' ? 'block' : 'none' }}
         >
-          {this.getCategories().map((category, i) => {
-            if (typeof category.label === 'undefined') {
-              console.log(category)
-            }
-            return (
-              <Category
-                ref={this.setCategoryRef.bind(this, `category-${i}`)}
-                key={i}
-                id={category.id}
-                name={category.label}
-                icons={category.icons}
-                perLine={perLine}
-                native={native}
-                hasStickyPosition={this.hasStickyPosition}
+          <div
+            ref={this.setScrollRef}
+            className="emoji-mart-scroll"
+            onScroll={this.handleScroll}
+          >
+            {this.getCategories().map((category, i) => {
+              return (
+                <Category
+                  ref={this.setCategoryRef.bind(this, `category-${i}`)}
+                  key={i}
+                  id={category.id}
+                  name={category.label}
+                  icons={category.icons}
+                  perLine={perLine}
+                  native={native}
+                  hasStickyPosition={this.hasStickyPosition}
+                  data={this.data}
+                  i18n={this.i18n}
+                  recent={
+                    category.id == this.RECENT_CATEGORY.id ? recent : undefined
+                  }
+                  custom={
+                    category.id == this.RECENT_CATEGORY.id
+                      ? this.CUSTOM_CATEGORY.icons
+                      : undefined
+                  }
+                  iconProps={{
+                    native: native,
+                    color: color,
+                    size: emojiSize,
+                    set: set,
+                    sheetSize: sheetSize,
+                    sheetColumns: sheetColumns,
+                    sheetRows: sheetRows,
+                    forceSize: native,
+                    tooltip: emojiTooltip,
+                    backgroundImageFn: backgroundImageFn,
+                    onOver: this.handleEmojiOver,
+                    onLeave: this.handleEmojiLeave,
+                    onClick: this.handleIconClick,
+                  }}
+                  notFound={notFound}
+                  notFoundEmoji={notFoundEmoji}
+                />
+              )
+            })}
+          </div>
+
+          {(showPreview || showColorPicker) && (
+            <div className="emoji-mart-bar">
+              <Preview
+                ref={this.setPreviewRef}
                 data={this.data}
-                i18n={this.i18n}
-                recent={
-                  category.id == this.RECENT_CATEGORY.id ? recent : undefined
-                }
-                custom={
-                  category.id == this.RECENT_CATEGORY.id
-                    ? this.CUSTOM_CATEGORY.icons
-                    : undefined
-                }
+                title={title}
+                icon={icon}
+                showColorPicker={showColorPicker}
+                showPreview={showPreview}
                 iconProps={{
                   native: native,
+                  size: 38,
                   color: color,
-                  size: emojiSize,
                   set: set,
                   sheetSize: sheetSize,
                   sheetColumns: sheetColumns,
                   sheetRows: sheetRows,
-                  forceSize: native,
-                  tooltip: emojiTooltip,
                   backgroundImageFn: backgroundImageFn,
-                  onOver: this.handleEmojiOver,
-                  onLeave: this.handleEmojiLeave,
-                  onClick: this.handleEmojiClick,
                 }}
-                notFound={notFound}
-                notFoundEmoji={notFoundEmoji}
+                colorsProps={{
+                  color: color,
+                  onChange: this.handleColorChange,
+                  skinEmoji: skinEmoji,
+                }}
+                i18n={this.i18n}
               />
-            )
-          })}
+            </div>
+          )}
         </div>
 
-        {(showPreview || showColorPicker) && (
-          <div className="emoji-mart-bar">
-            <Preview
-              ref={this.setPreviewRef}
-              data={this.data}
-              title={title}
-              icon={icon}
-              showColorPicker={showColorPicker}
-              showPreview={showPreview}
-              iconProps={{
-                native: native,
-                size: 38,
-                color: color,
-                set: set,
-                sheetSize: sheetSize,
-                sheetColumns: sheetColumns,
-                sheetRows: sheetRows,
-                backgroundImageFn: backgroundImageFn,
-              }}
-              colorsProps={{
-                color: color,
-                onChange: this.handleColorChange,
-                skinEmoji: skinEmoji,
-              }}
-              i18n={this.i18n}
-            />
-          </div>
-        )}
+        <div
+          className="custom"
+          style={{ display: activeTab === 'custom' ? 'block' : 'none' }}
+        >
+          <Category
+            ref={this.setCategoryRef.bind(this, `category-custom`)}
+            id="custom"
+            name="Custom"
+            icons={custom}
+            custom={custom}
+            perLine={perLine}
+            native={native}
+            hasStickyPosition={this.hasStickyPosition}
+            data={this.data}
+            i18n={this.i18n}
+            iconProps={{
+              native: native,
+              color: color,
+              size: emojiSize,
+              set: set,
+              sheetSize: sheetSize,
+              sheetColumns: sheetColumns,
+              sheetRows: sheetRows,
+              forceSize: native,
+              tooltip: emojiTooltip,
+              backgroundImageFn: backgroundImageFn,
+              onOver: this.handleEmojiOver,
+              onLeave: this.handleEmojiLeave,
+              onClick: this.handleIconClick,
+            }}
+            notFound={notFound}
+            notFoundEmoji={notFoundEmoji}
+          />
+          {showDropZone && (
+            <CustomDropzone i18n={this.i18n} onAcceptedFile={onAcceptedFiles} />
+          )}
+        </div>
       </section>
     )
   }
