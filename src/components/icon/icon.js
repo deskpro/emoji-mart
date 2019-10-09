@@ -38,7 +38,7 @@ const Icon = (props) => {
 
   const meta = props.data.icons[props.icon]
   if (!meta) {
-    if (props.icon.imageUrl) {
+    if (props.icon && props.icon.imageUrl) {
       style = {
         ...style,
         backgroundImage: `url(${props.icon.imageUrl})`,
