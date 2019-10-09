@@ -1,6 +1,6 @@
 {
   "name": "@deskpro/fa-picker",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Customizable Slack-like font awesome icon picker for React based on emoji-mart",
   "main": "dist/index.js",
   "module": "dist-es/index.js",
@@ -93,7 +93,7 @@
     "prepare": "npm run build:dist"
   },
   "pre-commit": {
-    "run": "prettier"
+    "run": "prettier:check"
   },
   "size-limit": [
     {
